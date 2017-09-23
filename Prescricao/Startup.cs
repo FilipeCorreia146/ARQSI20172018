@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using Prescricao.Models;
 
 namespace Prescricao
 {
@@ -24,6 +26,9 @@ namespace Prescricao
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<PrescricaoContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("PrescricaoContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
