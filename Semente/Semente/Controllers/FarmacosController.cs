@@ -10,57 +10,57 @@ using Semente.Models;
 namespace Semente.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Medicamentos")]
-    public class MedicamentosController : Controller
+    [Route("api/Farmacos")]
+    public class FarmacosController : Controller
     {
         private readonly SementeContext _context;
 
-        public MedicamentosController(SementeContext context)
+        public FarmacosController(SementeContext context)
         {
             _context = context;
         }
 
-        // GET: api/Medicamentos
+        // GET: api/Farmacos
         [HttpGet]
-        public IEnumerable<Medicamento> GetMedicamento()
+        public IEnumerable<Farmaco> GetFarmaco()
         {
-            return _context.Medicamento.Include("Farmaco");
+            return _context.Farmaco;
         }
 
-        // GET: api/Medicamentos/5
+        // GET: api/Farmacos/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMedicamento([FromRoute] long id)
+        public async Task<IActionResult> GetFarmaco([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Id == id);
+            var farmaco = await _context.Farmaco.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (medicamento == null)
+            if (farmaco == null)
             {
                 return NotFound();
             }
 
-            return Ok(medicamento);
+            return Ok(farmaco);
         }
 
-        // PUT: api/Medicamentos/5
+        // PUT: api/Farmacos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMedicamento([FromRoute] long id, [FromBody] Medicamento medicamento)
+        public async Task<IActionResult> PutFarmaco([FromRoute] int id, [FromBody] Farmaco farmaco)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != medicamento.Id)
+            if (id != farmaco.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(medicamento).State = EntityState.Modified;
+            _context.Entry(farmaco).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Semente.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicamentoExists(id))
+                if (!FarmacoExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace Semente.Controllers
             return NoContent();
         }
 
-        // POST: api/Medicamentos
+        // POST: api/Farmacos
         [HttpPost]
-        public async Task<IActionResult> PostMedicamento([FromBody] Medicamento medicamento)
+        public async Task<IActionResult> PostFarmaco([FromBody] Farmaco farmaco)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Medicamento.Add(medicamento);
+            _context.Farmaco.Add(farmaco);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMedicamento", new { id = medicamento.Id }, medicamento);
+            return CreatedAtAction("GetFarmaco", new { id = farmaco.Id }, farmaco);
         }
 
-        // DELETE: api/Medicamentos/5
+        // DELETE: api/Farmacos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMedicamento([FromRoute] long id)
+        public async Task<IActionResult> DeleteFarmaco([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Id == id);
-            if (medicamento == null)
+            var farmaco = await _context.Farmaco.SingleOrDefaultAsync(m => m.Id == id);
+            if (farmaco == null)
             {
                 return NotFound();
             }
 
-            _context.Medicamento.Remove(medicamento);
+            _context.Farmaco.Remove(farmaco);
             await _context.SaveChangesAsync();
 
-            return Ok(medicamento);
+            return Ok(farmaco);
         }
 
-        private bool MedicamentoExists(long id)
+        private bool FarmacoExists(int id)
         {
-            return _context.Medicamento.Any(e => e.Id == id);
+            return _context.Farmaco.Any(e => e.Id == id);
         }
     }
 }
