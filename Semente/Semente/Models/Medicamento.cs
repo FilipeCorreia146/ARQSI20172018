@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace Semente.Models
 {
-    public class Medicamento
-    {
+    public class Medicamento {
+
+        public long Id { get; set; }
+
+        public String Nome { get; set; }
     }
 }

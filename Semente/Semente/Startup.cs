@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using Semente.Models;
 
 namespace Semente
 {
@@ -24,6 +26,9 @@ namespace Semente
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<SementeContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SementeContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
