@@ -11,9 +11,10 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    partial class SementeContextModelSnapshot : ModelSnapshot
+    [Migration("20171008152725_Apresentacao")]
+    partial class Apresentacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,24 +71,6 @@ namespace Semente.Migrations
                     b.ToTable("Medicamento");
                 });
 
-            modelBuilder.Entity("Semente.Models.Posologia", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ApresentacaoId");
-
-                    b.Property<long?>("ApresentacaoId1");
-
-                    b.Property<string>("Dose");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApresentacaoId1");
-
-                    b.ToTable("Posologia");
-                });
-
             modelBuilder.Entity("Semente.Models.Apresentacao", b =>
                 {
                     b.HasOne("Semente.Models.Farmaco", "Farmaco")
@@ -97,13 +80,6 @@ namespace Semente.Migrations
                 });
 
             modelBuilder.Entity("Semente.Models.Medicamento", b =>
-                {
-                    b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
-                        .WithMany()
-                        .HasForeignKey("ApresentacaoId1");
-                });
-
-            modelBuilder.Entity("Semente.Models.Posologia", b =>
                 {
                     b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
                         .WithMany()

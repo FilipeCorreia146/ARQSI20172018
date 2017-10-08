@@ -8,7 +8,7 @@ namespace Semente.Models
     public class Medicamento {
         public long Id { get; set; }
         public String Nome { get; set; }
-        public int FarmacoId { get; set; }
-        public Farmaco Farmaco { get; set; }
+        public int ApresentacaoId { get; set; }
+        public Apresentacao Apresentacao { get; set; }
     }
 }

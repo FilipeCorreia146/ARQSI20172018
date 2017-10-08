@@ -11,9 +11,10 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    partial class SementeContextModelSnapshot : ModelSnapshot
+    [Migration("20171008152850_Posologia")]
+    partial class Posologia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

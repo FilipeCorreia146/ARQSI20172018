@@ -17,5 +17,9 @@ namespace Semente.Models
         public DbSet<Semente.Models.Medicamento> Medicamento { get; set; }
 
         public DbSet<Semente.Models.Farmaco> Farmaco { get; set; }
+
+        public DbSet<Semente.Models.Apresentacao> Apresentacao { get; set; }
+
+        public DbSet<Semente.Models.Posologia> Posologia { get; set; }
     }
 }

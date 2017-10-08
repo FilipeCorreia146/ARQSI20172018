@@ -10,57 +10,57 @@ using Semente.Models;
 namespace Semente.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Medicamentos")]
-    public class MedicamentosController : Controller
+    [Route("api/Posologias")]
+    public class PosologiasController : Controller
     {
         private readonly SementeContext _context;
 
-        public MedicamentosController(SementeContext context)
+        public PosologiasController(SementeContext context)
         {
             _context = context;
         }
 
-        // GET: api/Medicamentos
+        // GET: api/Posologias
         [HttpGet]
-        public IEnumerable<Medicamento> GetMedicamento()
+        public IEnumerable<Posologia> GetPosologia()
         {
-            return _context.Medicamento.Include("Apresentacao");
+            return _context.Posologia;
         }
 
-        // GET: api/Medicamentos/5
+        // GET: api/Posologias/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMedicamento([FromRoute] long id)
+        public async Task<IActionResult> GetPosologia([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Id == id);
+            var posologia = await _context.Posologia.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (medicamento == null)
+            if (posologia == null)
             {
                 return NotFound();
             }
 
-            return Ok(medicamento);
+            return Ok(posologia);
         }
 
-        // PUT: api/Medicamentos/5
+        // PUT: api/Posologias/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMedicamento([FromRoute] long id, [FromBody] Medicamento medicamento)
+        public async Task<IActionResult> PutPosologia([FromRoute] long id, [FromBody] Posologia posologia)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != medicamento.Id)
+            if (id != posologia.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(medicamento).State = EntityState.Modified;
+            _context.Entry(posologia).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Semente.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicamentoExists(id))
+                if (!PosologiaExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace Semente.Controllers
             return NoContent();
         }
 
-        // POST: api/Medicamentos
+        // POST: api/Posologias
         [HttpPost]
-        public async Task<IActionResult> PostMedicamento([FromBody] Medicamento medicamento)
+        public async Task<IActionResult> PostPosologia([FromBody] Posologia posologia)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Medicamento.Add(medicamento);
+            _context.Posologia.Add(posologia);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMedicamento", new { id = medicamento.Id }, medicamento);
+            return CreatedAtAction("GetPosologia", new { id = posologia.Id }, posologia);
         }
 
-        // DELETE: api/Medicamentos/5
+        // DELETE: api/Posologias/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMedicamento([FromRoute] long id)
+        public async Task<IActionResult> DeletePosologia([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Id == id);
-            if (medicamento == null)
+            var posologia = await _context.Posologia.SingleOrDefaultAsync(m => m.Id == id);
+            if (posologia == null)
             {
                 return NotFound();
             }
 
-            _context.Medicamento.Remove(medicamento);
+            _context.Posologia.Remove(posologia);
             await _context.SaveChangesAsync();
 
-            return Ok(medicamento);
+            return Ok(posologia);
         }
 
-        private bool MedicamentoExists(long id)
+        private bool PosologiaExists(long id)
         {
-            return _context.Medicamento.Any(e => e.Id == id);
+            return _context.Posologia.Any(e => e.Id == id);
         }
     }
 }
