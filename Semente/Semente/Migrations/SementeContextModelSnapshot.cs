@@ -27,15 +27,23 @@ namespace Semente.Migrations
 
                     b.Property<string>("Concentracao");
 
+                    b.Property<string>("Descricao");
+
                     b.Property<int>("FarmacoId");
 
                     b.Property<string>("Forma");
+
+                    b.Property<int>("MedicamentoId");
+
+                    b.Property<long?>("MedicamentoId1");
 
                     b.Property<string>("Qtd");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FarmacoId");
+
+                    b.HasIndex("MedicamentoId1");
 
                     b.ToTable("Apresentacao");
                 });
@@ -57,15 +65,9 @@ namespace Semente.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ApresentacaoId");
-
-                    b.Property<long?>("ApresentacaoId1");
-
                     b.Property<string>("Nome");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApresentacaoId1");
 
                     b.ToTable("Medicamento");
                 });
@@ -94,13 +96,10 @@ namespace Semente.Migrations
                         .WithMany()
                         .HasForeignKey("FarmacoId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("Semente.Models.Medicamento", b =>
-                {
-                    b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
+                    b.HasOne("Semente.Models.Medicamento", "Medicamento")
                         .WithMany()
-                        .HasForeignKey("ApresentacaoId1");
+                        .HasForeignKey("MedicamentoId1");
                 });
 
             modelBuilder.Entity("Semente.Models.Posologia", b =>

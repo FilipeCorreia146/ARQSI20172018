@@ -24,7 +24,7 @@ namespace Semente.Controllers
         [HttpGet]
         public IEnumerable<Apresentacao> GetApresentacao()
         {
-            return _context.Apresentacao;
+            return _context.Apresentacao.Include(a => a.Medicamento).Include(a => a.Farmaco);
         }
 
         // GET: api/Apresentacoes/5

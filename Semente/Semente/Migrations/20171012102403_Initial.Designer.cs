@@ -11,8 +11,8 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    [Migration("20171008152725_Apresentacao")]
-    partial class Apresentacao
+    [Migration("20171012102403_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,15 +28,23 @@ namespace Semente.Migrations
 
                     b.Property<string>("Concentracao");
 
+                    b.Property<string>("Descricao");
+
                     b.Property<int>("FarmacoId");
 
                     b.Property<string>("Forma");
+
+                    b.Property<int>("MedicamentoId");
+
+                    b.Property<long?>("MedicamentoId1");
 
                     b.Property<string>("Qtd");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FarmacoId");
+
+                    b.HasIndex("MedicamentoId1");
 
                     b.ToTable("Apresentacao");
                 });
@@ -58,17 +66,29 @@ namespace Semente.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Nome");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Medicamento");
+                });
+
+            modelBuilder.Entity("Semente.Models.Posologia", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("ApresentacaoId");
 
                     b.Property<long?>("ApresentacaoId1");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Dose");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApresentacaoId1");
 
-                    b.ToTable("Medicamento");
+                    b.ToTable("Posologia");
                 });
 
             modelBuilder.Entity("Semente.Models.Apresentacao", b =>
@@ -77,9 +97,13 @@ namespace Semente.Migrations
                         .WithMany()
                         .HasForeignKey("FarmacoId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Semente.Models.Medicamento", "Medicamento")
+                        .WithMany()
+                        .HasForeignKey("MedicamentoId1");
                 });
 
-            modelBuilder.Entity("Semente.Models.Medicamento", b =>
+            modelBuilder.Entity("Semente.Models.Posologia", b =>
                 {
                     b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
                         .WithMany()
