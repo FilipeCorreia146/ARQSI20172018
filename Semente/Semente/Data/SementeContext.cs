@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Semente.Models;
 
 namespace Semente.Models
 {
-    public class SementeContext : DbContext
+    public class SementeContext : IdentityDbContext<UserEntity>
     {
         public SementeContext (DbContextOptions<SementeContext> options)
             : base(options)
