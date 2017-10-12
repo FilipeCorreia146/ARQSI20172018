@@ -8,6 +8,7 @@ namespace Semente.Models
     public class LinhaReceita
     {
         public long Id { get; set; }
+        public int ReceitaId { get; set; }
         public Receita Receita { get; set; }
         public DateTime DataValidade { get; set; }
         public int Quantidade { get; set; }
