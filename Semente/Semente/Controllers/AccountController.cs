@@ -108,7 +108,7 @@ namespace Semente.Controllers
             issuer: _configuration.GetValue<string>("AppConfiguration:SiteUrl"),
             audience: _configuration.GetValue<string>("AppConfiguration:SiteUrl"),
             claims: GetTokenClaims(user).Union(userClaims),
-            expires: DateTime.UtcNow.AddMinutes(10),
+            expires: DateTime.UtcNow.AddMinutes(100),
             signingCredentials: new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
             _configuration.GetValue<string>("AppConfiguration:Key"))),

@@ -219,6 +219,7 @@ namespace Semente.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApresentacaoId = table.Column<int>(type: "int", nullable: false),
                     ApresentacaoId1 = table.Column<long>(type: "bigint", nullable: true),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dose = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

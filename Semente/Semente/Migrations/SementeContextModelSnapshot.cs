@@ -189,6 +189,8 @@ namespace Semente.Migrations
 
                     b.Property<long?>("ApresentacaoId1");
 
+                    b.Property<string>("Descricao");
+
                     b.Property<string>("Dose");
 
                     b.HasKey("Id");
