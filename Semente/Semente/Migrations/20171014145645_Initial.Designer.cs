@@ -11,8 +11,8 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    [Migration("20171012112746_UserIdentity")]
-    partial class UserIdentity
+    [Migration("20171014145645_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
