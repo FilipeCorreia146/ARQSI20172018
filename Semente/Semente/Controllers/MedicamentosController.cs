@@ -48,6 +48,24 @@ namespace Semente.Controllers
             return Ok(medicamento);
         }
 
+        [HttpGet("{Nome}")]
+        public async Task<IActionResult> GetMedicamentoByNome(String nome)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+
+            if (medicamento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(medicamento);
+        }
+
         // PUT: api/Medicamentos/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMedicamento([FromRoute] long id, [FromBody] Medicamento medicamento)
