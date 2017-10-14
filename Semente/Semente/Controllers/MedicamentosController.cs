@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Semente.Models;
 using Microsoft.AspNetCore.Authorization;
+using Semente.DTOs;
 
 namespace Semente.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //  [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Medicamentos")]
     public class MedicamentosController : Controller
@@ -22,11 +23,36 @@ namespace Semente.Controllers
             _context = context;
         }
 
+        //// GET: api/Medicamentos
+        //[HttpGet]
+        //public IEnumerable<Medicamento> GetMedicamento()
+        //{
+        //    return _context.Medicamento;
+        //}
+
         // GET: api/Medicamentos
+        // GET: api/Medicamentos/?nome=Brufen
         [HttpGet]
-        public IEnumerable<Medicamento> GetMedicamento()
+        public async Task<IActionResult> GetMedicamento(String nome)
         {
-            return _context.Medicamento;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (nome == null)
+            {
+                return Ok(_context.Medicamento);
+            }
+
+            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+
+            if (medicamento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(medicamento);
         }
 
         // GET: api/Medicamentos/5
@@ -48,24 +74,7 @@ namespace Semente.Controllers
             return Ok(medicamento);
         }
 
-        [HttpGet("{Nome}")]
-        public async Task<IActionResult> GetMedicamentoByNome(String nome)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-
-            }
-
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
-
-            if (medicamento == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(medicamento);
-        }
+        
 
         // PUT: api/Medicamentos/5
         [HttpPut("{id}")]

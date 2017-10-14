@@ -10,7 +10,7 @@ namespace Semente.Models
         public long Id { get; set; }
         public String Descricao { get; set; }
         public String Dose { get; set; }
-        public int ApresentacaoId { get; set; }
+        public long ApresentacaoId { get; set; }
         public Apresentacao Apresentacao { get; set; }
     }
 }

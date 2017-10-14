@@ -190,8 +190,7 @@ namespace Semente.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FarmacoId = table.Column<int>(type: "int", nullable: false),
                     Forma = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MedicamentoId = table.Column<int>(type: "int", nullable: false),
-                    MedicamentoId1 = table.Column<long>(type: "bigint", nullable: true),
+                    MedicamentoId = table.Column<long>(type: "bigint", nullable: false),
                     Qtd = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -204,11 +203,11 @@ namespace Semente.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Apresentacao_Medicamento_MedicamentoId1",
-                        column: x => x.MedicamentoId1,
+                        name: "FK_Apresentacao_Medicamento_MedicamentoId",
+                        column: x => x.MedicamentoId,
                         principalTable: "Medicamento",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,8 +216,7 @@ namespace Semente.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApresentacaoId = table.Column<int>(type: "int", nullable: false),
-                    ApresentacaoId1 = table.Column<long>(type: "bigint", nullable: true),
+                    ApresentacaoId = table.Column<long>(type: "bigint", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dose = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -226,11 +224,11 @@ namespace Semente.Migrations
                 {
                     table.PrimaryKey("PK_Posologia", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posologia_Apresentacao_ApresentacaoId1",
-                        column: x => x.ApresentacaoId1,
+                        name: "FK_Posologia_Apresentacao_ApresentacaoId",
+                        column: x => x.ApresentacaoId,
                         principalTable: "Apresentacao",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -239,9 +237,9 @@ namespace Semente.Migrations
                 column: "FarmacoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Apresentacao_MedicamentoId1",
+                name: "IX_Apresentacao_MedicamentoId",
                 table: "Apresentacao",
-                column: "MedicamentoId1");
+                column: "MedicamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -283,9 +281,9 @@ namespace Semente.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posologia_ApresentacaoId1",
+                name: "IX_Posologia_ApresentacaoId",
                 table: "Posologia",
-                column: "ApresentacaoId1");
+                column: "ApresentacaoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

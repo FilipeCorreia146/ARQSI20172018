@@ -11,7 +11,7 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    [Migration("20171014173253_Initial")]
+    [Migration("20171014211915_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,9 +142,7 @@ namespace Semente.Migrations
 
                     b.Property<string>("Forma");
 
-                    b.Property<int>("MedicamentoId");
-
-                    b.Property<long?>("MedicamentoId1");
+                    b.Property<long>("MedicamentoId");
 
                     b.Property<string>("Qtd");
 
@@ -152,7 +150,7 @@ namespace Semente.Migrations
 
                     b.HasIndex("FarmacoId");
 
-                    b.HasIndex("MedicamentoId1");
+                    b.HasIndex("MedicamentoId");
 
                     b.ToTable("Apresentacao");
                 });
@@ -186,9 +184,7 @@ namespace Semente.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ApresentacaoId");
-
-                    b.Property<long?>("ApresentacaoId1");
+                    b.Property<long>("ApresentacaoId");
 
                     b.Property<string>("Descricao");
 
@@ -196,7 +192,7 @@ namespace Semente.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApresentacaoId1");
+                    b.HasIndex("ApresentacaoId");
 
                     b.ToTable("Posologia");
                 });
@@ -306,14 +302,16 @@ namespace Semente.Migrations
 
                     b.HasOne("Semente.Models.Medicamento", "Medicamento")
                         .WithMany()
-                        .HasForeignKey("MedicamentoId1");
+                        .HasForeignKey("MedicamentoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Semente.Models.Posologia", b =>
                 {
                     b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
                         .WithMany()
-                        .HasForeignKey("ApresentacaoId1");
+                        .HasForeignKey("ApresentacaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
