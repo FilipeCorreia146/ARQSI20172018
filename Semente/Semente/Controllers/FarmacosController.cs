@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Semente.Models;
+using System.Linq.Expressions;
+using Semente.DTOs;
 
 namespace Semente.Controllers
 {
+    //  [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
-    [Route("api/Farmacos")]
+    //[Route("api/Farmacos")]
     public class FarmacosController : Controller
     {
         private readonly SementeContext _context;
@@ -20,15 +23,49 @@ namespace Semente.Controllers
             _context = context;
         }
 
+        private static readonly Expression<Func<Farmaco, FarmacoDto>> AsFarmacoDto =
+            x => new FarmacoDto
+            {
+                Id = x.Id,
+                Nome = x.Nome
+            };
+
+        //// GET: api/Farmacos
+        //[HttpGet]
+        //public IEnumerable<Farmaco> GetFarmaco()
+        //{
+        //    return _context.Farmaco;
+        //}
+
         // GET: api/Farmacos
-        [HttpGet]
-        public IEnumerable<Farmaco> GetFarmaco()
+        // GET: api/Farmacos/?nome={nome}
+        //[HttpGet]
+        [Route("api/Farmacos")]
+        public async Task<IActionResult> GetFarmaco(String nome)
         {
-            return _context.Farmaco;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (nome == null)
+            {
+                return Ok(_context.Medicamento);
+            }
+
+            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+
+            if (medicamento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(medicamento);
         }
 
         // GET: api/Farmacos/5
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
+        [Route("api/Farmacos/{id}")]
         public async Task<IActionResult> GetFarmaco([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -44,6 +81,23 @@ namespace Semente.Controllers
             }
 
             return Ok(farmaco);
+        }
+
+        [Route("api/Farmacos/{id}/Apresentacoes")]
+        public async Task<IActionResult> GetApresentacoes(int id)
+        {
+            var apresentacao = await (from a in _context.Apresentacao.Include(a => a.Farmaco)
+                                      where a.FarmacoId == id
+                                      select new ApresentacaoDto
+                                      {
+                                          Id = a.Id
+                                      }).FirstOrDefaultAsync();
+
+            if (apresentacao == null)
+            {
+                return NotFound();
+            }
+            return Ok(apresentacao);
         }
 
         // PUT: api/Farmacos/5

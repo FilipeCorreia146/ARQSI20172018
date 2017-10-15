@@ -9,6 +9,7 @@ using Semente.Models;
 
 namespace Semente.Controllers
 {
+    //  [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Posologias")]
     public class PosologiasController : Controller
@@ -24,7 +25,7 @@ namespace Semente.Controllers
         [HttpGet]
         public IEnumerable<Posologia> GetPosologia()
         {
-            return _context.Posologia;
+            return _context.Posologia.Include("Apresentacao");
         }
 
         // GET: api/Posologias/5
@@ -36,7 +37,7 @@ namespace Semente.Controllers
                 return BadRequest(ModelState);
             }
 
-            var posologia = await _context.Posologia.SingleOrDefaultAsync(m => m.Id == id);
+            var posologia = await _context.Posologia.Include("Apresentacao").SingleOrDefaultAsync(m => m.Id == id);
 
             if (posologia == null)
             {

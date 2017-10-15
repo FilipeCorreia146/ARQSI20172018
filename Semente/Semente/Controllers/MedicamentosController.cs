@@ -31,7 +31,7 @@ namespace Semente.Controllers
         //}
 
         // GET: api/Medicamentos
-        // GET: api/Medicamentos/?nome=Brufen
+        // GET: api/Medicamentos/?nome={nome}
         [HttpGet]
         public async Task<IActionResult> GetMedicamento(String nome)
         {

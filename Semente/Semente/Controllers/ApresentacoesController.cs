@@ -9,6 +9,7 @@ using Semente.Models;
 
 namespace Semente.Controllers
 {
+    //  [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Apresentacoes")]
     public class ApresentacoesController : Controller
@@ -36,7 +37,8 @@ namespace Semente.Controllers
                 return BadRequest(ModelState);
             }
 
-            var apresentacao = await _context.Apresentacao.SingleOrDefaultAsync(m => m.Id == id);
+            var apresentacao = await _context.Apresentacao.Include(a => a.Medicamento).Include(a => a.Farmaco)
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (apresentacao == null)
             {

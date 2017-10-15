@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Semente.DTOs
 {
-    public class MedicamentoDto
+    public class FarmacoDto
     {
+        public int Id { get; set; }
         public String Nome { get; set; }
     }
 }
