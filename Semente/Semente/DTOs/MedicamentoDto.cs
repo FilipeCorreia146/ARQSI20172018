@@ -7,6 +7,7 @@ namespace Semente.DTOs
 {
     public class MedicamentoDto
     {
+        public long Id { get; set; }
         public String Nome { get; set; }
     }
 }

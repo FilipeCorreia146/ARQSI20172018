@@ -18,17 +18,48 @@ namespace Semente.Controllers
     {
         private readonly SementeContext _context;
 
-        public FarmacosController(SementeContext context)
-        {
-            _context = context;
-        }
-
         private static readonly Expression<Func<Farmaco, FarmacoDto>> AsFarmacoDto =
             x => new FarmacoDto
             {
                 Id = x.Id,
                 Nome = x.Nome
             };
+
+        private static readonly Expression<Func<Medicamento, MedicamentoDto>> AsMedicamentoDto =
+            x => new MedicamentoDto
+            {
+                Id = x.Id,
+                Nome = x.Nome
+            };
+
+        private static readonly Expression<Func<Posologia, PosologiaDto>> AsPosologiaDto =
+            x => new PosologiaDto
+            {
+                Id = x.Id,
+                Descricao = x.Descricao,
+                Dose = x.Dose,
+                ApresentacaoId = x.ApresentacaoId,
+                Apresentacao = x.Apresentacao
+            };
+
+        private static readonly Expression<Func<Apresentacao, ApresentacaoDto>> AsApresentacaoDto =
+            x => new ApresentacaoDto
+            {
+                Id = x.Id,
+                Descricao = x.Descricao,
+                Forma = x.Forma,
+                Concentracao = x.Concentracao,
+                Qtd = x.Qtd,
+                MedicamentoId = x.MedicamentoId,
+                Medicamento = x.Medicamento,
+                FarmacoId = x.FarmacoId,
+                Farmaco = x.Farmaco
+            };
+
+        public FarmacosController(SementeContext context)
+        {
+            _context = context;
+        }
 
         //// GET: api/Farmacos
         //[HttpGet]
@@ -83,24 +114,82 @@ namespace Semente.Controllers
             return Ok(farmaco);
         }
 
-        [Route("api/Farmacos/{id}/Apresentacoes")]
-        public async Task<IActionResult> GetApresentacoes(int id)
+        // GET: Farmacos/{id}/Medicamentos
+        [Route("api/Farmacos/{id}/Medicamentos")]
+        public IEnumerable<long> GetMedicamentos(int id)
         {
-            var apresentacao = await (from a in _context.Apresentacao.Include(a => a.Farmaco)
-                                      where a.FarmacoId == id
-                                      select new ApresentacaoDto
-                                      {
-                                          Id = a.Id
-                                      }).FirstOrDefaultAsync();
+            IEnumerable<ApresentacaoDto> apresentacoes = _context.Apresentacao
+                .Where(a => a.FarmacoId == id)
+                .Select(AsApresentacaoDto);
 
-            if (apresentacao == null)
+            List<long> ids = new List<long>();
+
+            Boolean b = false;
+
+            foreach (ApresentacaoDto a in apresentacoes)
             {
-                return NotFound();
+                foreach (int i in ids)
+                {
+                    if (i == a.MedicamentoId)
+                    {
+                        b = true;
+                    }
+                }
+                if (b == false)
+                {
+                    ids.Add(a.MedicamentoId);
+                }   
             }
-            return Ok(apresentacao);
+
+            return ids;
+        }
+
+        // GET: Farmacos/{id}/Posologias
+        [Route("api/Farmacos/{id}/Posologias")]
+        public IEnumerable<long> GetPosologias(int id)
+        {
+            IEnumerable<ApresentacaoDto> apresentacoes = _context.Apresentacao
+                .Where(a => a.FarmacoId == id)
+                .Select(AsApresentacaoDto);
+
+            IEnumerable<PosologiaDto> posologias = _context.Posologia
+                .Select(AsPosologiaDto);
+            
+            List<long> ids = new List<long>();
+
+            foreach (ApresentacaoDto a in apresentacoes)
+            {
+                foreach(PosologiaDto p in posologias)
+                {
+                    if (p.ApresentacaoId == a.Id)
+                    {
+                        ids.Add(p.Id);
+                    }
+                }
+            }
+
+            return ids;
+        }
+
+        // GET: Farmacos/{id}/Apresentacoes
+        [Route("api/Farmacos/{id}/Apresentacoes")]
+        public IEnumerable<long> GetApresentacoes(int id)
+        {
+            IEnumerable<ApresentacaoDto> apresentacoes = _context.Apresentacao
+                .Where(a => a.FarmacoId == id)
+                .Select(AsApresentacaoDto);
+
+            List<long> ids = new List<long>();
+
+            foreach(ApresentacaoDto a in apresentacoes){
+                ids.Add(a.Id);
+            }
+
+            return ids;
         }
 
         // PUT: api/Farmacos/5
+        [Route("api/Farmacos")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFarmaco([FromRoute] int id, [FromBody] Farmaco farmaco)
         {
@@ -136,6 +225,7 @@ namespace Semente.Controllers
         }
 
         // POST: api/Farmacos
+        [Route("api/Farmacos")]
         [HttpPost]
         public async Task<IActionResult> PostFarmaco([FromBody] Farmaco farmaco)
         {
@@ -151,6 +241,7 @@ namespace Semente.Controllers
         }
 
         // DELETE: api/Farmacos/5
+        [Route("api/Farmacos")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFarmaco([FromRoute] int id)
         {
