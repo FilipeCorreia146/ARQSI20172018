@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Semente.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Semente.Controllers
 {
-    //  [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Apresentacoes")]
     public class ApresentacoesController : Controller

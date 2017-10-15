@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Semente.Models;
 using System.Linq.Expressions;
 using Semente.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Semente.Controllers
 {
-    //  [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     //[Route("api/Medicamentos")]
     public class MedicamentosController : Controller
