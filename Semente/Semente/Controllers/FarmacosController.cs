@@ -70,8 +70,8 @@ namespace Semente.Controllers
 
         // GET: api/Farmacos
         // GET: api/Farmacos/?nome={nome}
-        //[HttpGet]
         [Route("api/Farmacos")]
+        [HttpGet]
         public async Task<IActionResult> GetFarmaco(String nome)
         {
             if (!ModelState.IsValid)
@@ -97,6 +97,7 @@ namespace Semente.Controllers
         // GET: api/Farmacos/5
         //[HttpGet("{id}")]
         [Route("api/Farmacos/{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetFarmaco([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -116,6 +117,7 @@ namespace Semente.Controllers
 
         // GET: Farmacos/{id}/Medicamentos
         [Route("api/Farmacos/{id}/Medicamentos")]
+        [HttpGet]
         public IEnumerable<long> GetMedicamentos(int id)
         {
             IEnumerable<ApresentacaoDto> apresentacoes = _context.Apresentacao
@@ -146,6 +148,7 @@ namespace Semente.Controllers
 
         // GET: Farmacos/{id}/Posologias
         [Route("api/Farmacos/{id}/Posologias")]
+        [HttpGet]
         public IEnumerable<long> GetPosologias(int id)
         {
             IEnumerable<ApresentacaoDto> apresentacoes = _context.Apresentacao
@@ -173,6 +176,7 @@ namespace Semente.Controllers
 
         // GET: Farmacos/{id}/Apresentacoes
         [Route("api/Farmacos/{id}/Apresentacoes")]
+        [HttpGet]
         public IEnumerable<long> GetApresentacoes(int id)
         {
             IEnumerable<ApresentacaoDto> apresentacoes = _context.Apresentacao
