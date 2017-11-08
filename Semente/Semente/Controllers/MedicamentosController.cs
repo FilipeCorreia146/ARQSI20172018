@@ -45,7 +45,7 @@ namespace Semente.Controllers
                 Descricao = x.Descricao,
                 Dose = x.Dose,
                 ApresentacaoId = x.ApresentacaoId,
-                Apresentacao = x.Apresentacao
+                //Apresentacao = x.Apresentacao
             };
 
         private static readonly Expression<Func<Apresentacao, ApresentacaoDto>> AsApresentacaoDto =
@@ -57,9 +57,9 @@ namespace Semente.Controllers
                 Concentracao = x.Concentracao,
                 Qtd = x.Qtd,
                 MedicamentoId = x.MedicamentoId,
-                Medicamento = x.Medicamento,
+                ////Medicamento = x.Medicamento,
                 FarmacoId = x.FarmacoId,
-                Farmaco = x.Farmaco
+                //Farmaco = x.Farmaco
             };
 
         //// GET: api/Medicamentos

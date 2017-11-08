@@ -12,6 +12,6 @@ namespace Semente.DTOs
         public String Descricao { get; set; }
         public String Dose { get; set; }
         public long ApresentacaoId { get; set; }
-        public Apresentacao Apresentacao { get; set; }
+        //public Apresentacao Apresentacao { get; set; }
     }
 }
