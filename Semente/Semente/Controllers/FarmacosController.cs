@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Semente.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     //[Route("api/Farmacos")]
     public class FarmacosController : Controller
@@ -196,6 +196,7 @@ namespace Semente.Controllers
         // PUT: api/Farmacos/5
         [Route("api/Farmacos")]
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PutFarmaco([FromRoute] int id, [FromBody] Farmaco farmaco)
         {
             if (!ModelState.IsValid)
@@ -232,6 +233,7 @@ namespace Semente.Controllers
         // POST: api/Farmacos
         [Route("api/Farmacos")]
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PostFarmaco([FromBody] Farmaco farmaco)
         {
             if (!ModelState.IsValid)
@@ -248,6 +250,7 @@ namespace Semente.Controllers
         // DELETE: api/Farmacos/5
         [Route("api/Farmacos")]
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteFarmaco([FromRoute] int id)
         {
             if (!ModelState.IsValid)

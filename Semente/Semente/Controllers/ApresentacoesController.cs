@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Semente.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Produces("application/json")]
     [Route("api/Apresentacoes")]
     public class ApresentacoesController : Controller
@@ -51,6 +51,7 @@ namespace Semente.Controllers
 
         // PUT: api/Apresentacoes/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PutApresentacao([FromRoute] long id, [FromBody] Apresentacao apresentacao)
         {
             if (!ModelState.IsValid)
@@ -86,6 +87,7 @@ namespace Semente.Controllers
 
         // POST: api/Apresentacoes
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PostApresentacao([FromBody] Apresentacao apresentacao)
         {
             if (!ModelState.IsValid)
@@ -101,6 +103,7 @@ namespace Semente.Controllers
 
         // DELETE: api/Apresentacoes/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteApresentacao([FromRoute] long id)
         {
             if (!ModelState.IsValid)
