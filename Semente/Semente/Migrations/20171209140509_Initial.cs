@@ -191,6 +191,8 @@ namespace Semente.Migrations
                     FarmacoId = table.Column<int>(type: "int", nullable: false),
                     Forma = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MedicamentoId = table.Column<long>(type: "bigint", nullable: false),
+                    NomeFarmaco = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NomeMedicamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Qtd = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

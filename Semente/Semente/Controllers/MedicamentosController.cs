@@ -203,7 +203,7 @@ namespace Semente.Controllers
         // POST: api/Medicamentos
         [Route("api/Medicamentos")]
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PostMedicamento([FromBody] Medicamento medicamento)
         {
             if (!ModelState.IsValid)

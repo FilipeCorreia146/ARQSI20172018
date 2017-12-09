@@ -14,7 +14,9 @@ namespace Semente.Models
         public String Qtd { get; set; }
         public long MedicamentoId { get; set; }
         public Medicamento Medicamento { get; set; }
+        public String NomeMedicamento { get; set; }
         public int FarmacoId { get; set; }
         public Farmaco Farmaco { get; set; }
+        public String NomeFarmaco { get; set; }
     }
 }

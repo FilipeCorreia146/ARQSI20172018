@@ -11,7 +11,7 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    [Migration("20171015144351_Initial")]
+    [Migration("20171209140509_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,6 +143,10 @@ namespace Semente.Migrations
                     b.Property<string>("Forma");
 
                     b.Property<long>("MedicamentoId");
+
+                    b.Property<string>("NomeFarmaco");
+
+                    b.Property<string>("NomeMedicamento");
 
                     b.Property<string>("Qtd");
 

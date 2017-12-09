@@ -14,8 +14,10 @@ namespace Semente.DTOs
         public String Concentracao { get; set; }
         public String Qtd { get; set; }
         public long MedicamentoId { get; set; }
+        public String NomeMedicamento { get; set; }
         //public Medicamento Medicamento { get; set; }
         public int FarmacoId { get; set; }
+        public String NomeFarmaco { get; set; }
         //public Farmaco Farmaco { get; set; }
     }
 }

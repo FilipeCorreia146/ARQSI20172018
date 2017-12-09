@@ -143,6 +143,10 @@ namespace Semente.Migrations
 
                     b.Property<long>("MedicamentoId");
 
+                    b.Property<string>("NomeFarmaco");
+
+                    b.Property<string>("NomeMedicamento");
+
                     b.Property<string>("Qtd");
 
                     b.HasKey("Id");

@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace Semente
 {
@@ -30,7 +32,23 @@ namespace Semente
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
+            });*/
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             services.AddMvc();
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+            });
 
             services.AddDbContext<SementeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SementeContext")));
@@ -56,8 +74,8 @@ namespace Semente
                             ctx.Response.StatusCode = 401;
                             return Task.FromResult<object>(null);
                         }
-                            ctx.Response.Redirect(ctx.RedirectUri);
-                            return Task.FromResult<object>(null);
+                        ctx.Response.Redirect(ctx.RedirectUri);
+                        return Task.FromResult<object>(null);
                     }
                 }
             )
@@ -86,6 +104,12 @@ namespace Semente
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            /*app.UseCors(builder =>
+       builder.WithOrigins("http://example.com"));
+            app.UseCors(builder =>
+       builder.WithOrigins("http://localhost:4200").AllowAnyHeader());*/
+            app.UseCors("AllowSpecificOrigin");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
