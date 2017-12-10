@@ -143,10 +143,6 @@ namespace Semente.Migrations
 
                     b.Property<long>("MedicamentoId");
 
-                    b.Property<string>("NomeFarmaco");
-
-                    b.Property<string>("NomeMedicamento");
-
                     b.Property<string>("Qtd");
 
                     b.HasKey("Id");
@@ -198,6 +194,22 @@ namespace Semente.Migrations
                     b.HasIndex("ApresentacaoId");
 
                     b.ToTable("Posologia");
+                });
+
+            modelBuilder.Entity("Semente.Models.Reacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descricao");
+
+                    b.Property<int>("FarmacoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FarmacoId");
+
+                    b.ToTable("Reacao");
                 });
 
             modelBuilder.Entity("Semente.Models.UserEntity", b =>
@@ -314,6 +326,14 @@ namespace Semente.Migrations
                     b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
                         .WithMany()
                         .HasForeignKey("ApresentacaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Semente.Models.Reacao", b =>
+                {
+                    b.HasOne("Semente.Models.Farmaco", "Farmaco")
+                        .WithMany()
+                        .HasForeignKey("FarmacoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

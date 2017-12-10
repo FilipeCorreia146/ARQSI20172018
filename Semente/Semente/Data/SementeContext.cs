@@ -22,5 +22,7 @@ namespace Semente.Models
         public DbSet<Semente.Models.Apresentacao> Apresentacao { get; set; }
 
         public DbSet<Semente.Models.Posologia> Posologia { get; set; }
+
+        public DbSet<Semente.Models.Reacao> Reacao { get; set; }
     }
 }

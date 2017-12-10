@@ -181,6 +181,26 @@ namespace Semente.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reacao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FarmacoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reacao", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reacao_Farmaco_FarmacoId",
+                        column: x => x.FarmacoId,
+                        principalTable: "Farmaco",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Apresentacao",
                 columns: table => new
                 {
@@ -191,8 +211,6 @@ namespace Semente.Migrations
                     FarmacoId = table.Column<int>(type: "int", nullable: false),
                     Forma = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MedicamentoId = table.Column<long>(type: "bigint", nullable: false),
-                    NomeFarmaco = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NomeMedicamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Qtd = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -286,6 +304,11 @@ namespace Semente.Migrations
                 name: "IX_Posologia_ApresentacaoId",
                 table: "Posologia",
                 column: "ApresentacaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reacao_FarmacoId",
+                table: "Reacao",
+                column: "FarmacoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -307,6 +330,9 @@ namespace Semente.Migrations
 
             migrationBuilder.DropTable(
                 name: "Posologia");
+
+            migrationBuilder.DropTable(
+                name: "Reacao");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -11,7 +11,7 @@ using System;
 namespace Semente.Migrations
 {
     [DbContext(typeof(SementeContext))]
-    [Migration("20171209140509_Initial")]
+    [Migration("20171210085842_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,10 +144,6 @@ namespace Semente.Migrations
 
                     b.Property<long>("MedicamentoId");
 
-                    b.Property<string>("NomeFarmaco");
-
-                    b.Property<string>("NomeMedicamento");
-
                     b.Property<string>("Qtd");
 
                     b.HasKey("Id");
@@ -199,6 +195,22 @@ namespace Semente.Migrations
                     b.HasIndex("ApresentacaoId");
 
                     b.ToTable("Posologia");
+                });
+
+            modelBuilder.Entity("Semente.Models.Reacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descricao");
+
+                    b.Property<int>("FarmacoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FarmacoId");
+
+                    b.ToTable("Reacao");
                 });
 
             modelBuilder.Entity("Semente.Models.UserEntity", b =>
@@ -315,6 +327,14 @@ namespace Semente.Migrations
                     b.HasOne("Semente.Models.Apresentacao", "Apresentacao")
                         .WithMany()
                         .HasForeignKey("ApresentacaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Semente.Models.Reacao", b =>
+                {
+                    b.HasOne("Semente.Models.Farmaco", "Farmaco")
+                        .WithMany()
+                        .HasForeignKey("FarmacoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

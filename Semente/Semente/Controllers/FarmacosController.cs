@@ -141,7 +141,7 @@ namespace Semente.Controllers
                 if (b == false)
                 {
                     ids.Add(a.MedicamentoId);
-                }   
+                }
             }
 
             return ids;
@@ -158,12 +158,12 @@ namespace Semente.Controllers
 
             IEnumerable<PosologiaDto> posologias = _context.Posologia
                 .Select(AsPosologiaDto);
-            
+
             List<long> ids = new List<long>();
 
             foreach (ApresentacaoDto a in apresentacoes)
             {
-                foreach(PosologiaDto p in posologias)
+                foreach (PosologiaDto p in posologias)
                 {
                     if (p.ApresentacaoId == a.Id)
                     {
@@ -186,11 +186,22 @@ namespace Semente.Controllers
 
             List<long> ids = new List<long>();
 
-            foreach(ApresentacaoDto a in apresentacoes){
+            foreach (ApresentacaoDto a in apresentacoes)
+            {
                 ids.Add(a.Id);
             }
 
             return ids;
+        }
+
+        [Route("api/Farmacos/{id}/Reacoes")]
+        [HttpGet]
+        public IEnumerable<Reacao> GetReacoes(int id)
+        {
+
+            IEnumerable<Reacao> reacoes = _context.Reacao.Where(r => r.FarmacoId == id);
+
+            return reacoes;
         }
 
         // PUT: api/Farmacos/5
