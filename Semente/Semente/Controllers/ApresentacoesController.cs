@@ -27,22 +27,22 @@ namespace Semente.Controllers
         // GET: api/Apresentacoes
         [HttpGet]
         //[EnableCors("AllowSpecificOrigin")]
-        /*public IEnumerable<Apresentacao> GetApresentacao()
+        public IEnumerable<Apresentacao> GetApresentacao()
         {
             return _context.Apresentacao.Include(a => a.Medicamento).Include(a => a.Farmaco);
-        }*/
-        public IEnumerable<Apresentacao> GetApresentacao()
+        }
+        /*public IEnumerable<Apresentacao> GetApresentacao()
         {
             IEnumerable<Apresentacao> apresentacoes = _context.Apresentacao.Include(a => a.Medicamento).Include(a => a.Farmaco);
             
-            foreach(Apresentacao a in apresentacoes)
+            /*foreach(Apresentacao a in apresentacoes)
             {
                 a.NomeFarmaco = a.Farmaco.Nome;
                 a.NomeMedicamento = a.Medicamento.Nome;
             }
 
             return apresentacoes;
-        }
+        }**/
 
         // GET: api/Apresentacoes/5
         [HttpGet("{id}")]
