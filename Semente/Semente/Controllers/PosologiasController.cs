@@ -86,7 +86,7 @@ namespace Semente.Controllers
 
         // POST: api/Posologias
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PostPosologia([FromBody] Posologia posologia)
         {
             if (!ModelState.IsValid)

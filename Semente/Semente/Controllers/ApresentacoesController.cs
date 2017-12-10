@@ -64,6 +64,17 @@ namespace Semente.Controllers
             return Ok(apresentacao);
         }
 
+        [Route("api/Apresentacoes/{id}/Posologias")]
+        [HttpGet]
+        public IEnumerable<Posologia> GetPosologias(int id)
+        {
+
+            IEnumerable<Posologia> posologias = _context.Posologia.
+                Where(p => p.ApresentacaoId == id);
+
+            return posologias;
+        }
+
         // PUT: api/Apresentacoes/5
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -102,7 +113,7 @@ namespace Semente.Controllers
 
         // POST: api/Apresentacoes
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PostApresentacao([FromBody] Apresentacao apresentacao)
         {
             if (!ModelState.IsValid)

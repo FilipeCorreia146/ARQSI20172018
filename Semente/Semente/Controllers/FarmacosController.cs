@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,10 +83,10 @@ namespace Semente.Controllers
 
             if (nome == null)
             {
-                return Ok(_context.Medicamento);
+                return Ok(_context.Farmaco);
             }
 
-            var medicamento = await _context.Medicamento.SingleOrDefaultAsync(m => m.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+            var medicamento = await _context.Farmaco.SingleOrDefaultAsync(m => m.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
 
             if (medicamento == null)
             {
